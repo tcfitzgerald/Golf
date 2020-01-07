@@ -17,6 +17,7 @@ onready var deckButton = $TextureButton
 var card_offset = 30
 var tableau_count = 7
 var cards_per_tableau = 5
+var score = 35
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,12 +34,12 @@ func deal_cards():
 
 			
 	var last_card = deck.get_top_card()
-	wastePile.move_card_to_waste_pile(last_card)
+	wastePile.move_card_to_waste_pile(last_card, false)
 
 func refresh_waste_pile():
 	if deckCards.get_child_count() > 0:
 		var card = deck.get_top_card()
-		wastePile.move_card_to_waste_pile(card)
+		wastePile.move_card_to_waste_pile(card, false, true)
 		
 
 func _on_TextureButton_pressed() -> void:
@@ -57,7 +58,7 @@ func check_valid_moves():
 			var cardPlusOne = wasteCard.int_value + 1
 			if wasteCard.int_value == 13:
 				return false
-				
+			
 			if top_card.int_value == cardMinusOne or top_card.int_value == cardPlusOne:
 				return top_card
 

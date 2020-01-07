@@ -4,6 +4,7 @@ extends Node2D
 onready var cards = $Cards
 onready var wastePile = get_parent().get_node("WastePile")
 onready var board = get_parent()
+onready var tween = $Tween
 var cardScene = preload("res://Scenes/Card.tscn")
 
 
@@ -16,9 +17,12 @@ func has_cards():
 func add_card_to_tableau(selected_card, card_offset):
 	cards.add_child(selected_card)
 	selected_card.set_owner(cards)
-	selected_card.position = cards.get_parent().position
-	selected_card.position.y += card_offset
-	selected_card.stack = cards
+	tween.interpolate_property(selected_card, "position", selected_card.position, 
+			Vector2(cards.get_parent().position.x, cards.get_parent().position.y + card_offset), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
+	
+	#selected_card.position = cards.get_parent().position
+	#selected_card.position.y += card_offset
 	var cardButton = selected_card.get_node("Button")
 	selected_card.connect("card_clicked", self, "_on_tableau_card_clicked")
 	cardButton.disabled = false

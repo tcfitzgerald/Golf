@@ -6,7 +6,9 @@ export(String) var suit
 export(String) var face_value
 export(Texture) var card_front_texture
 export(Texture) var card_back_texture
-export(PackedScene) var stack
+
+# onready
+onready var animate = $AnimationPlayer
 
 # signals
 signal card_clicked(card)
@@ -19,3 +21,12 @@ func _ready() -> void:
 
 func _on_Button_pressed() -> void:
 	emit_signal("card_clicked", self)
+
+func blink():
+	animate.play("Blink")
+	
+func change_card_texture(new_texture):
+	if new_texture == "back":
+		texture = card_back_texture
+	elif new_texture == "front":
+		texture = card_front_texture

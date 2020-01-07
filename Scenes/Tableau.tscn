@@ -14,3 +14,5 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 140, 190 )
 rect_scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]

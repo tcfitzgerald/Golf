@@ -1,27 +1,28 @@
 [gd_resource type="Theme" load_steps=10 format=2]
 
-[sub_resource type="DynamicFontData" id=1]
-font_path = "res://Fonts/Kenney Future Narrow.ttf"
-
-[sub_resource type="DynamicFont" id=2]
-size = 26
-font_data = SubResource( 1 )
-
-[sub_resource type="StyleBoxEmpty" id=3]
-
-[sub_resource type="StyleBoxEmpty" id=4]
-
-[sub_resource type="StyleBoxEmpty" id=10]
-
-[sub_resource type="StyleBoxEmpty" id=6]
-
-[sub_resource type="StyleBoxEmpty" id=7]
-
 [sub_resource type="DynamicFontData" id=8]
 font_path = "res://Fonts/Kenney Future Narrow.ttf"
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=7]
+size = 26
 font_data = SubResource( 8 )
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.0431373, 0.52549, 0.196078, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="DynamicFontData" id=9]
+font_path = "res://Fonts/Kenney Future Narrow.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+font_data = SubResource( 9 )
 
 [resource]
 Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
@@ -29,12 +30,12 @@ Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
 Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 2 )
-Button/styles/disabled = SubResource( 3 )
-Button/styles/focus = SubResource( 4 )
+Button/fonts/font = SubResource( 7 )
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 2 )
 Button/styles/hover = SubResource( 10 )
-Button/styles/normal = SubResource( 6 )
-Button/styles/pressed = SubResource( 7 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 5 )
 Label/colors/font_color = Color( 1, 1, 1, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -42,5 +43,5 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 9 )
+Label/fonts/font = SubResource( 6 )
 Label/styles/normal = null

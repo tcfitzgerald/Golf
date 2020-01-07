@@ -14,3 +14,7 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 140, 190 )
 rect_scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+playback_speed = 3.0
+playback/speed = 3.0
