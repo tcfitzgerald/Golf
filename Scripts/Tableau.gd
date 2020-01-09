@@ -6,7 +6,7 @@ onready var wastePile = get_parent().get_node("WastePile")
 onready var board = get_parent()
 onready var tween = $Tween
 var cardScene = preload("res://Scenes/Card.tscn")
-
+var cardMove = preload("res://Scripts/Move.gd")
 
 func _ready():
 	get_node("Cards").connect("card_clicked", self, "_on_tableau_card_clicked")
@@ -14,11 +14,11 @@ func _ready():
 func has_cards():
 	return cards.get_child_count() > 0
 
-func add_card_to_tableau(selected_card, card_offset):
+func add_card_to_tableau(selected_card, card_offset, duration = 1):
 	cards.add_child(selected_card)
 	selected_card.set_owner(cards)
 	tween.interpolate_property(selected_card, "position", selected_card.position, 
-			Vector2(cards.get_parent().position.x, cards.get_parent().position.y + card_offset), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			Vector2(cards.get_parent().position.x, cards.get_parent().position.y + card_offset), duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 	
 	#selected_card.position = cards.get_parent().position
@@ -44,6 +44,10 @@ func _on_tableau_card_clicked(card):
 			return
 			
 		if card.int_value == cardMinusOne or card.int_value == cardPlusOne:
+			var move = CardMove.new(card, card.get_parent(), card.position)
+			board.moves.append(move)
+			
+			print(board.moves[0].card)
 			wastePile.move_card_to_waste_pile(card)
 			
 		board.check_game_over()
