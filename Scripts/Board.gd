@@ -102,3 +102,15 @@ func _on_NewGameButton_pressed() -> void:
 
 func _on_UndoButton_pressed() -> void:
 	print(moves.back())
+	var move = moves.back()
+	var parent = move.cardParent
+	var card = move.card
+	var cardPosition = move.currentPosition
+	card.get_parent().remove_child(card)
+	parent.add_child(card)
+	card.set_owner(parent)
+	card.position = cardPosition
+	var cardButton = card.get_node("Button")
+	cardButton.disabled = false
+	moves.pop_back()
+	print(moves.back())
