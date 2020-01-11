@@ -46,8 +46,6 @@ func _on_tableau_card_clicked(card):
 		if card.int_value == cardMinusOne or card.int_value == cardPlusOne:
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
-			
-			print(board.moves[0].card)
 			wastePile.move_card_to_waste_pile(card)
 			
 		board.check_game_over()

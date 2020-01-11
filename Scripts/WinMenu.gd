@@ -1,4 +1,4 @@
-extends Control
+extends Popup
 
 # onready
 onready var board = get_parent()
@@ -13,8 +13,3 @@ func _on_PlayAgainButton_pressed() -> void:
 
 func _on_QuitButton_pressed() -> void:
 	get_tree().quit()
-
-
-func _on_UndoLastMoveButton_pressed() -> void:
-	hide()
-	board.undo()

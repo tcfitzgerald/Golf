@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Board.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Deck.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Tableau.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/WastePile.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Graphics/cardBack_blue5.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/DeckPile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/GameOverMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/WinMenu.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Theme" id=1]
 Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
@@ -45,6 +46,7 @@ __meta__ = {
 }
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
+editor/display_folded = true
 
 [node name="Deck" parent="." instance=ExtResource( 3 )]
 position = Vector2( 40, 20 )
@@ -73,30 +75,26 @@ position = Vector2( 880, 200 )
 [node name="WastePile" parent="." instance=ExtResource( 5 )]
 position = Vector2( 180, 20 )
 
-[node name="TextureButton" type="TextureButton" parent="."]
-margin_left = 40.0
-margin_top = 20.0
-margin_right = 183.0
-margin_bottom = 210.0
-rect_min_size = Vector2( 140, 190 )
-rect_scale = Vector2( 0.75, 0.75 )
-mouse_default_cursor_shape = 2
-action_mode = 0
-texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 6 )
-texture_hover = ExtResource( 6 )
-texture_disabled = ExtResource( 6 )
-texture_focused = ExtResource( 6 )
+[node name="DeckPile" parent="." instance=ExtResource( 6 )]
 
 [node name="GameOverMenu" parent="." instance=ExtResource( 7 )]
 
 [node name="GameOverTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="WinMenu" parent="." instance=ExtResource( 8 )]
+
+[node name="WinTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/NewGameButton" to="." method="_on_NewGameButton_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/UndoButton" to="." method="_on_UndoButton_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/HBoxContainer/HintButton" to="." method="_on_HintButton_pressed"]
 [connection signal="top_card_clicked" from="Deck" to="." method="_on_Deck_top_card_clicked"]
-[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
+[connection signal="check_win" from="WastePile" to="." method="_on_WastePile_check_win"]
+[connection signal="pressed" from="DeckPile" to="." method="_on_DeckPile_pressed"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
+[connection signal="timeout" from="WinTimer" to="." method="_on_WinTimer_timeout"]
 
 [editable path="UI"]

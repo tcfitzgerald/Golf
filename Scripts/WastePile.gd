@@ -3,9 +3,10 @@ extends Node2D
 # onready
 onready var cardHolder = $Cards
 onready var tween = $Tween
+onready var board = get_parent()
 
 # signals
-
+signal check_win
 
 func _ready():
 	pass
@@ -35,3 +36,4 @@ func move_card_to_waste_pile(card, play_tween = true, play_flip = false):
 		card.position = cardHolder.get_parent().position
 	var cardButton = card.get_node("Button")
 	cardButton.disabled = true
+	emit_signal("check_win")

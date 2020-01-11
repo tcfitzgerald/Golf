@@ -28,3 +28,9 @@ margin_left = 86.0
 margin_right = 132.0
 margin_bottom = 40.0
 text = "Undo"
+
+[node name="HintButton" type="Button" parent="MarginContainer/HBoxContainer"]
+margin_left = 136.0
+margin_right = 175.0
+margin_bottom = 40.0
+text = "Hint"
