@@ -24,6 +24,10 @@ config/name="Golf"
 run/main_scene="res://Scenes/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SaveAndLoad="*res://Scripts/SaveAndLoad.gd"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

@@ -1,6 +1,8 @@
 extends Control
 
+onready var scoreLabel = $MarginContainer/VBoxContainer/ScoreLabel
 
+signal new_game
 
 func _ready():
 	pass

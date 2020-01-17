@@ -9,7 +9,7 @@ var cardScene = preload("res://Scenes/Card.tscn")
 var cardMove = preload("res://Scripts/Move.gd")
 
 func _ready():
-	get_node("Cards").connect("card_clicked", self, "_on_tableau_card_clicked")
+	cards.connect("card_clicked", self, "_on_tableau_card_clicked")
 
 func has_cards():
 	return cards.get_child_count() > 0

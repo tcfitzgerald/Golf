@@ -46,7 +46,6 @@ __meta__ = {
 }
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
-editor/display_folded = true
 
 [node name="Deck" parent="." instance=ExtResource( 3 )]
 position = Vector2( 40, 20 )
@@ -88,7 +87,7 @@ one_shot = true
 [node name="WinTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
-[connection signal="pressed" from="UI/MarginContainer/HBoxContainer/NewGameButton" to="." method="_on_NewGameButton_pressed"]
+[connection signal="new_game" from="UI" to="." method="_on_UI_new_game"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/UndoButton" to="." method="_on_UndoButton_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/HintButton" to="." method="_on_HintButton_pressed"]
 [connection signal="top_card_clicked" from="Deck" to="." method="_on_Deck_top_card_clicked"]

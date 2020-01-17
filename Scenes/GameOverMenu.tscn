@@ -1,13 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main_menu_theme.tres" type="Theme" id=1]
 [ext_resource path="res://Fonts/Kenney Future.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
 # onready
 onready var board = get_parent()
+onready var scoreLabel = $CenterContainer/VBoxContainer/ScoreLabel
 
 func _ready():
 	pass
@@ -26,15 +27,20 @@ func _on_UndoLastMoveButton_pressed() -> void:
 	board.undo()
 "
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
+size = 36
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
 size = 80
 font_data = ExtResource( 2 )
 
 [node name="GameOverMenu" type="Popup"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -53,33 +59,41 @@ margin_right = 400.0
 margin_bottom = 301.263
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_top = 204.0
+margin_top = 181.0
 margin_right = 817.0
-margin_bottom = 396.0
+margin_bottom = 418.0
+
+[node name="ScoreLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 817.0
+margin_bottom = 41.0
+custom_fonts/font = SubResource( 2 )
+text = "Score: 35"
+align = 1
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_top = 45.0
 margin_right = 817.0
-margin_bottom = 90.0
-custom_fonts/font = SubResource( 1 )
+margin_bottom = 135.0
+custom_fonts/font = SubResource( 3 )
 text = "No More Moves"
 align = 1
 
 [node name="UndoLastMoveButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 94.0
+margin_top = 139.0
 margin_right = 817.0
-margin_bottom = 124.0
+margin_bottom = 169.0
 text = "Undo Last Move"
 
 [node name="PlayAgainButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 128.0
+margin_top = 173.0
 margin_right = 817.0
-margin_bottom = 158.0
+margin_bottom = 203.0
 text = "Play Again"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 162.0
+margin_top = 207.0
 margin_right = 817.0
-margin_bottom = 192.0
+margin_bottom = 237.0
 text = "Quit"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/UndoLastMoveButton" to="." method="_on_UndoLastMoveButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayAgainButton" to="." method="_on_PlayAgainButton_pressed"]

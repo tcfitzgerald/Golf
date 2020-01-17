@@ -16,6 +16,7 @@ onready var wastePile = $WastePile
 onready var wastePileCards = $WastePile/Cards
 onready var deckButton = $DeckPile
 onready var gameOver = $GameOverMenu
+onready var scoreLabel = $GameOverMenu.scoreLabel
 onready var gameOverTimer = $GameOverTimer
 onready var winMenu = $WinMenu
 onready var winTimer = $WinTimer
@@ -23,7 +24,7 @@ onready var winTimer = $WinTimer
 var card_offset = 30
 var tableau_count = 7
 var cards_per_tableau = 5
-var score = 35
+var score = 0
 
 var moves = []
 onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tableau6, tableau7]
@@ -117,11 +118,8 @@ func undo():
 	moves.pop_back()
 
 func get_score():
-	var score = 0
 	for tableau in tableaus:
 		score += tableau.cards.get_child_count()
-	
-	print(score)
 	
 	return score
 
@@ -135,6 +133,8 @@ func hint():
 		deckButton.shake()
 
 func _on_GameOverTimer_timeout() -> void:
+	var highScore = get_score()
+	scoreLabel.text = "Score: " + str(highScore)
 	gameOver.popup()
 
 
