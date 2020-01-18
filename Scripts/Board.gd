@@ -26,6 +26,11 @@ var tableau_count = 7
 var cards_per_tableau = 5
 var score = 0
 
+# variations
+var allow_queens_on_kings
+var turn_corners
+var empty_foundation
+
 var moves = []
 onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tableau6, tableau7]
 
@@ -36,6 +41,9 @@ func _ready() -> void:
 	deal_cards()
 	
 func deal_cards():
+	allow_queens_on_kings = Settings.get_setting("queens_on_kings")
+	turn_corners = Settings.get_setting("turn_corners")
+	empty_foundation = Settings.get_setting("empty_foundation")
 	
 	# loop through deck and re-parent cards
 	var duration = 1
@@ -56,9 +64,9 @@ func deal_cards():
 #			tableau.add_card_to_tableau(selected_card, j * card_offset, duration * .05)
 
 
-			
-	var last_card = deck.get_top_card()
-	wastePile.move_card_to_waste_pile(last_card, false)
+	if not empty_foundation:		
+		var last_card = deck.get_top_card()
+		wastePile.move_card_to_waste_pile(last_card, false)
 
 func refresh_waste_pile():
 	if deckCards.get_child_count() > 0:
@@ -74,13 +82,22 @@ func check_valid_moves():
 			var wasteCard = wastePile.get_top_card()
 			var cardMinusOne = wasteCard.int_value - 1
 			var cardPlusOne = wasteCard.int_value + 1
-			if wasteCard.int_value == 13:
+			if wasteCard.int_value == 13 and allow_queens_on_kings == false or turn_corners == false:
 				return false
 			
 			if top_card.int_value == cardMinusOne or top_card.int_value == cardPlusOne:
 				return top_card
+				
+			if turn_corners == true:
+				if (top_card.int_value == 1 and wasteCard.int_value == 13 or 
+				top_card.int_value == 13 and wasteCard.int_value == 1):
+					return top_card
 
 func check_game_over():
+	if check_win():
+		print(moves)
+		win()
+		return
 	# is the deck empty?
 	if deckCards.get_child_count() == 0:
 		# go through tableaus to see if any of the last cards can be used
@@ -96,10 +113,10 @@ func check_win():
 			tableaus_with_cards += 1
 			
 	return tableaus_with_cards == 0
+
 			
 func gameover():
 	gameOverTimer.start()
-	get_score()
 	
 func win():
 	winTimer.start()
@@ -118,6 +135,7 @@ func undo():
 	moves.pop_back()
 
 func get_score():
+
 	for tableau in tableaus:
 		score += tableau.cards.get_child_count()
 	
@@ -166,4 +184,5 @@ func _on_DeckPile_pressed() -> void:
 	refresh_waste_pile()
 	if deckCards.get_child_count() == 0:
 		deckButton.hide()
+		check_win()
 		check_game_over()

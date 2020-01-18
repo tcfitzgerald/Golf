@@ -13,7 +13,9 @@ func _ready():
 
 func get_top_card():
 	var cards_count = cardHolder.get_child_count()
-	var top_card = cardHolder.get_child(cards_count - 1)
+	var top_card = null
+	if cards_count > 0:
+		top_card = cardHolder.get_child(cards_count - 1)
 	
 	return top_card
 	

@@ -25,6 +25,10 @@ func _on_QuitButton_pressed() -> void:
 func _on_UndoLastMoveButton_pressed() -> void:
 	hide()
 	board.undo()
+
+
+func _on_MainMenuButton_pressed() -> void:
+	get_tree().change_scene(\"res://Scenes/MainMenu.tscn\")
 "
 
 [sub_resource type="DynamicFont" id=2]
@@ -59,9 +63,9 @@ margin_right = 400.0
 margin_bottom = 301.263
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_top = 181.0
+margin_top = 164.0
 margin_right = 817.0
-margin_bottom = 418.0
+margin_bottom = 435.0
 
 [node name="ScoreLabel" type="Label" parent="CenterContainer/VBoxContainer"]
 margin_right = 817.0
@@ -90,11 +94,18 @@ margin_right = 817.0
 margin_bottom = 203.0
 text = "Play Again"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 207.0
 margin_right = 817.0
 margin_bottom = 237.0
+text = "Back To Main menu"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 241.0
+margin_right = 817.0
+margin_bottom = 271.0
 text = "Quit"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/UndoLastMoveButton" to="." method="_on_UndoLastMoveButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayAgainButton" to="." method="_on_PlayAgainButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

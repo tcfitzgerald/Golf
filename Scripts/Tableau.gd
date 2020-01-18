@@ -37,12 +37,27 @@ func get_top_tableau_card():
 
 func _on_tableau_card_clicked(card):
 	if is_top_tableau_card(card):
+		
 		var wasteCard = wastePile.get_top_card()
+		
+		if not wasteCard:
+			var move = CardMove.new(card, card.get_parent(), card.position)
+			board.moves.append(move)
+			wastePile.move_card_to_waste_pile(card)
+			return
+		
 		var cardMinusOne = wasteCard.int_value - 1
 		var cardPlusOne = wasteCard.int_value + 1
-		if wasteCard.int_value == 13:
+		if wasteCard.int_value == 13 and board.allow_queens_on_kings == false or board.turn_corners == false:
 			return
-			
+		
+		if board.turn_corners == true:
+				if (card.int_value == 1 and wasteCard.int_value == 13 or 
+				card.int_value == 13 and wasteCard.int_value == 1):
+					var move = CardMove.new(card, card.get_parent(), card.position)
+					board.moves.append(move)
+					wastePile.move_card_to_waste_pile(card)
+		
 		if card.int_value == cardMinusOne or card.int_value == cardPlusOne:
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
