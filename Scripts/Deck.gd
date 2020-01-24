@@ -65,11 +65,21 @@ var cards = [
 
 ]
 
+var jokers = [
+{"int_value": 0, "suit": "Joker", "face": "Joker", "texture": "cardJoker.png"},
+{"int_value": 0, "suit": "Joker", "face": "Joker", "texture": "cardJoker.png"}
+]
+
 func _ready() -> void:
+	
 	build_deck()
 
 func build_deck():
+	Settings.load_settings()
 	randomize()
+	if Settings.jokers_wildcard:
+		cards.append(jokers[0])
+		cards.append(jokers[1])
 	cards.shuffle()
 	for card in cards:
 		var newCard = cardScene.instance()

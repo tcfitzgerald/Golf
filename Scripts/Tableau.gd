@@ -45,13 +45,17 @@ func _on_tableau_card_clicked(card):
 			board.moves.append(move)
 			wastePile.move_card_to_waste_pile(card)
 			return
-		
+		if (card.int_value == 0 or wasteCard.int_value == 0):
+			var move = CardMove.new(card, card.get_parent(), card.position)
+			board.moves.append(move)
+			wastePile.move_card_to_waste_pile(card)
+			
 		var cardMinusOne = wasteCard.int_value - 1
 		var cardPlusOne = wasteCard.int_value + 1
-		if wasteCard.int_value == 13 and board.allow_queens_on_kings == false or board.turn_corners == false:
+		if wasteCard.int_value == 13 and Settings.allow_queens_on_kings == false or Settings.turn_corners == false:
 			return
 		
-		if board.turn_corners == true:
+		if Settings.turn_corners == true:
 				if (card.int_value == 1 and wasteCard.int_value == 13 or 
 				card.int_value == 13 and wasteCard.int_value == 1):
 					var move = CardMove.new(card, card.get_parent(), card.position)

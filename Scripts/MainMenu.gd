@@ -13,6 +13,7 @@ func _on_HowToPlayButton_pressed() -> void:
 
 
 func _on_PlayButton_pressed() -> void:
+	Settings.load_settings()
 	get_tree().change_scene("res://Scenes/Board.tscn")
 
 

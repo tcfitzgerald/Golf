@@ -12,9 +12,15 @@ var _settings = {
 		"empty_foundation": false
 	}
 }
+# variations
+var allow_queens_on_kings
+var turn_corners
+var jokers_wildcard
+var empty_foundation
 
 func _ready() -> void:
 	load_settings()
+
 	
 func save_settings():
 	for section in _settings.keys():
@@ -31,6 +37,11 @@ func load_settings():
 	for section in _settings.keys():
 		for key in _settings[section]:
 			_settings[section][key] = _config_file.get_value(section, key, null)
+			
+	allow_queens_on_kings = _settings["variations"]["queens_on_kings"]
+	turn_corners = _settings["variations"]["turn_corners"]
+	jokers_wildcard = _settings["variations"]["jokers_wildcard"]
+	empty_foundation = _settings["variations"]["empty_foundation"]
 			
 func get_setting(key):
 	return _settings["variations"][key]
