@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH = "res://config.cfg"
+const SAVE_PATH = "user://config.cfg"
 
 var _config_file = ConfigFile.new()
 
@@ -20,6 +20,9 @@ var empty_foundation
 
 func _ready() -> void:
 	load_settings()
+	var config_file = File.new()
+	if not config_file.file_exists(SAVE_PATH):
+		save_settings()
 
 	
 func save_settings():
@@ -32,6 +35,10 @@ func save_settings():
 func load_settings():
 	var error = _config_file.load(SAVE_PATH)
 	if error != OK:
+		allow_queens_on_kings = _settings["variations"]["queens_on_kings"]
+		turn_corners = _settings["variations"]["turn_corners"]
+		jokers_wildcard = _settings["variations"]["jokers_wildcard"]
+		empty_foundation = _settings["variations"]["empty_foundation"]
 		return null
 		
 	for section in _settings.keys():

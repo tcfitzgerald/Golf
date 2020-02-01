@@ -1,50 +1,22 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main_menu_theme.tres" type="Theme" id=1]
-[ext_resource path="res://Fonts/Kenney Future.ttf" type="DynamicFontData" id=2]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Control
-
-# onready
-onready var board = get_parent()
-onready var scoreLabel = $CenterContainer/VBoxContainer/ScoreLabel
-
-func _ready():
-	pass
-
-
-func _on_PlayAgainButton_pressed() -> void:
-	get_tree().change_scene(\"res://Scenes/Board.tscn\")
-
-
-func _on_QuitButton_pressed() -> void:
-	get_tree().quit()
-
-
-func _on_UndoLastMoveButton_pressed() -> void:
-	hide()
-	board.undo()
-
-
-func _on_MainMenuButton_pressed() -> void:
-	get_tree().change_scene(\"res://Scenes/MainMenu.tscn\")
-"
+[ext_resource path="res://Scripts/GameOverMenu.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/Kenney Future.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=2]
 size = 36
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 80
-font_data = ExtResource( 2 )
+font_data = ExtResource( 3 )
 
 [node name="GameOverMenu" type="Popup"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
-script = SubResource( 1 )
+script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0

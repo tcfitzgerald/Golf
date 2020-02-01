@@ -17,6 +17,7 @@ onready var wastePileCards = $WastePile/Cards
 onready var deckButton = $DeckPile
 onready var gameOver = $GameOverMenu
 onready var scoreLabel = $GameOverMenu.scoreLabel
+onready var boardScoreLabel = $BoardScoreLabel
 onready var gameOverTimer = $GameOverTimer
 onready var winMenu = $WinMenu
 onready var winTimer = $WinTimer
@@ -24,7 +25,7 @@ onready var winTimer = $WinTimer
 var card_offset = 30
 var tableau_count = 7
 var cards_per_tableau = 5
-var score = 0
+var score = 0 setget set_score
 
 
 
@@ -35,8 +36,16 @@ onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tablea
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	set_score(35)
 	deal_cards()
+
+func set_score(value):
+	score = value
+	update_score_label()
 	
+func update_score_label():
+	boardScoreLabel.text = "Score: " + str(score)
+
 func deal_cards():
 	Settings.load_settings()
 	
@@ -75,11 +84,13 @@ func check_valid_moves():
 		if tableau.has_cards():
 			var top_card = tableau.get_top_tableau_card()
 			var wasteCard = wastePile.get_top_card()
-			if (top_card.int_value == 0 or wasteCard.int_value == 0):
+			if wasteCard == null:
 				return top_card
+			if (top_card.int_value == 0 or wasteCard.int_value == 0):
+					return top_card
 			var cardMinusOne = wasteCard.int_value - 1
 			var cardPlusOne = wasteCard.int_value + 1
-			if wasteCard.int_value == 13 and Settings.allow_queens_on_kings == false or Settings.turn_corners == false:
+			if wasteCard.int_value == 13 and (Settings.allow_queens_on_kings == false or Settings.turn_corners == false):
 				return false
 			
 			if top_card.int_value == cardMinusOne or top_card.int_value == cardPlusOne:
@@ -92,8 +103,6 @@ func check_valid_moves():
 
 func check_game_over():
 	if check_win():
-		for move in moves:
-			print(move.card.int_value)
 		win()
 		return
 	# is the deck empty?
@@ -101,7 +110,7 @@ func check_game_over():
 		# go through tableaus to see if any of the last cards can be used
 		if check_valid_moves():
 			pass
-		else:
+		else:		
 			gameover()
 			
 func check_win():
@@ -131,6 +140,13 @@ func undo():
 	var cardButton = card.get_node("Button")
 	cardButton.disabled = false
 	moves.pop_back()
+	if deckCards.get_child_count() > 0:
+		deckButton.show()
+		
+	var current_score = 0
+	for tableau in tableaus:
+		current_score += tableau.get_card_count()
+	set_score(current_score)
 
 func get_score():
 
@@ -149,7 +165,7 @@ func hint():
 		deckButton.shake()
 
 func _on_GameOverTimer_timeout() -> void:
-	var highScore = get_score()
+	var highScore = score
 	scoreLabel.text = "Score: " + str(highScore)
 	gameOver.popup()
 

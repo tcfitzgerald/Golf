@@ -1,0 +1,104 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://main_menu_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/RulesMenu.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://Fonts/Kenney Future Narrow.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=4]
+use_filter = true
+font_data = SubResource( 3 )
+
+[node name="RulesMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 1024, 600 )
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.027451, 0.388235, 0.141176, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 600.0
+custom_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_left = 414.0
+margin_right = 589.0
+margin_bottom = 57.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 2 )
+text = "Rules"
+align = 1
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer"]
+editor/display_folded = true
+margin_top = 77.0
+margin_right = 1004.0
+margin_bottom = 537.0
+rect_min_size = Vector2( 1000, 460 )
+rect_clip_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Panel"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/margin_left = 10
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer"]
+margin_left = 10.0
+margin_right = 990.0
+margin_bottom = 459.0
+rect_min_size = Vector2( 980, 400 )
+size_flags_horizontal = 3
+size_flags_vertical = 12
+custom_fonts/font = SubResource( 4 )
+text = "How to play
+
+Tee off by taking the topmost stock card and placing it, face up, on the waste pile.  You may now move the topmost tableau cards to the waste pile, one at a time, as long as they are one up or one down in rank (suits and ranks do no matter).  So, if your top waste card is a 7, for example, you may remove any 6s or 8s from the tableau.
+
+In Golf, aces are always low, and you may build A-2-A but not 2-A-K.  In fact, you may not build up or down on a king at all.  Simply deal another card from the stock and move along to the next tee.  You may play through the stock pile only once.
+
+Winning
+
+The goal is to clear away the entire tableau, moving all cards to a single waste pile.  At the end of the game, count how many cards are left in the tableau; this is your score.  As in golf, the lower the score, the better.
+
+Common variations on these rules include:
+
+Queens may be played on top of Kings.
+Turning the corner is permitted so that a King can be played on top of an Ace, and vice versa.
+One or both of the Jokers may be added to the deck and used as wild cards that represent any value.
+The foundation pile can start off empty, so players can choose one of the exposed cards to move them to the foundation for a \"head-start\"."
+autowrap = true
+percent_visible = -0.00219298
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_left = 367.0
+margin_top = 557.0
+margin_right = 636.0
+margin_bottom = 587.0
+size_flags_horizontal = 4
+size_flags_vertical = 12
+text = "back to main menu"
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]

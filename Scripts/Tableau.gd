@@ -14,6 +14,9 @@ func _ready():
 func has_cards():
 	return cards.get_child_count() > 0
 
+func get_card_count():
+	return cards.get_child_count()
+
 func add_card_to_tableau(selected_card, card_offset, duration = 1):
 	cards.add_child(selected_card)
 	selected_card.set_owner(cards)
@@ -44,7 +47,12 @@ func _on_tableau_card_clicked(card):
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
 			wastePile.move_card_to_waste_pile(card)
+			var current_score = 0
+			for tableau in board.tableaus:
+				current_score += tableau.get_card_count()
+			board.set_score(current_score)
 			return
+			
 		if (card.int_value == 0 or wasteCard.int_value == 0):
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
@@ -52,7 +60,7 @@ func _on_tableau_card_clicked(card):
 			
 		var cardMinusOne = wasteCard.int_value - 1
 		var cardPlusOne = wasteCard.int_value + 1
-		if wasteCard.int_value == 13 and Settings.allow_queens_on_kings == false or Settings.turn_corners == false:
+		if wasteCard.int_value == 13 and (Settings.allow_queens_on_kings == false or Settings.turn_corners == false):
 			return
 		
 		if Settings.turn_corners == true:
@@ -66,5 +74,11 @@ func _on_tableau_card_clicked(card):
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
 			wastePile.move_card_to_waste_pile(card)
-			
+		
+
 		board.check_game_over()
+		
+	var current_score = 0
+	for tableau in board.tableaus:
+		current_score += tableau.get_card_count()
+	board.set_score(current_score)

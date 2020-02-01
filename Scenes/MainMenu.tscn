@@ -55,11 +55,11 @@ margin_right = 284.0
 margin_bottom = 147.0
 text = "Play"
 
-[node name="HowToPlayButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="RulesButton" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 151.0
 margin_right = 284.0
 margin_bottom = 181.0
-text = "Tutorial"
+text = "Rules"
 
 [node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 185.0
@@ -73,6 +73,6 @@ margin_right = 284.0
 margin_bottom = 249.0
 text = "Quit"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/HowToPlayButton" to="." method="_on_HowToPlayButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/RulesButton" to="." method="_on_RulesButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/OptionsButton" to="." method="_on_OptionsButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

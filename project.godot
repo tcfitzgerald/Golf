@@ -27,6 +27,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Settings="*res://Scripts/Settings.gd"
+Stats="*res://Scripts/Stats.gd"
 
 [rendering]
 

@@ -8,9 +8,6 @@ func _on_QuitButton_pressed() -> void:
 	get_tree().quit()
 
 
-func _on_HowToPlayButton_pressed() -> void:
-	pass # Replace with function body.
-
 
 func _on_PlayButton_pressed() -> void:
 	Settings.load_settings()
@@ -19,3 +16,7 @@ func _on_PlayButton_pressed() -> void:
 
 func _on_OptionsButton_pressed() -> void:
 	get_tree().change_scene("res://Scenes/OptionsMenu.tscn")
+
+
+func _on_RulesButton_pressed() -> void:
+	get_tree().change_scene("res://Scenes/RulesMenu.tscn")

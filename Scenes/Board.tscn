@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Board.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=2]
@@ -31,6 +31,13 @@ Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
 Label/styles/normal = null
 
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://Fonts/Kenney Future Narrow.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = SubResource( 2 )
+
 [node name="Board" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -46,6 +53,7 @@ __meta__ = {
 }
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
+editor/display_folded = true
 
 [node name="Deck" parent="." instance=ExtResource( 3 )]
 position = Vector2( 40, 20 )
@@ -87,6 +95,16 @@ one_shot = true
 [node name="WinTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="BoardScoreLabel" type="Label" parent="."]
+margin_left = 816.116
+margin_top = 16.2972
+margin_right = 981.116
+margin_bottom = 51.2972
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+text = "Score: 35"
+align = 2
 [connection signal="new_game" from="UI" to="." method="_on_UI_new_game"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/UndoButton" to="." method="_on_UndoButton_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/HintButton" to="." method="_on_HintButton_pressed"]
