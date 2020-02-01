@@ -129,24 +129,27 @@ func win():
 	winTimer.start()
 	
 func undo():
-	var move = moves.back()
-	var parent = move.cardParent
-	var card = move.card
-	var cardPosition = move.currentPosition
-	card.get_parent().remove_child(card)
-	parent.add_child(card)
-	card.set_owner(parent)
-	card.position = cardPosition
-	var cardButton = card.get_node("Button")
-	cardButton.disabled = false
-	moves.pop_back()
-	if deckCards.get_child_count() > 0:
-		deckButton.show()
-		
-	var current_score = 0
-	for tableau in tableaus:
-		current_score += tableau.get_card_count()
-	set_score(current_score)
+	if moves.size() > 0:
+		var move = moves.back()
+		var parent = move.cardParent
+		var card = move.card
+		var cardPosition = move.currentPosition
+		card.get_parent().remove_child(card)
+		parent.add_child(card)
+		card.set_owner(parent)
+		card.position = cardPosition
+		var cardButton = card.get_node("Button")
+		cardButton.disabled = false
+		moves.pop_back()
+		if deckCards.get_child_count() > 0:
+			deckButton.show()
+			
+		var current_score = 0
+		for tableau in tableaus:
+			current_score += tableau.get_card_count()
+		set_score(current_score)
+	else:
+		return
 
 func get_score():
 
