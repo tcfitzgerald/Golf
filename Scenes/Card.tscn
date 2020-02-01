@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Card.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/cardSpadesK.png" type="Texture" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://Animations/Blink.tres" type="Animation" id=5]
 [ext_resource path="res://Animations/Shake.tres" type="Animation" id=6]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "Flip"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:texture")
@@ -34,7 +34,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.75, 0.75 ), Vector2( 1e-05, 0.75 ), Vector2( 0.75, 0.75 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Scale"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
@@ -47,6 +47,21 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.75, 0.75 ), Vector2( 1, 1 ), Vector2( 0.75, 0.75 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "TextureShake"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -5.0, 5.0, 0.0 ]
 }
 
 [node name="Card" type="Node2D"]
@@ -66,12 +81,22 @@ action_mode = 0
 align = 0
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 3 )
 centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Blink = ExtResource( 5 )
-anims/Flip = SubResource( 2 )
-anims/Scale = SubResource( 3 )
+anims/Flip = SubResource( 1 )
+anims/Scale = SubResource( 2 )
 anims/Shake = ExtResource( 6 )
+anims/TextureShake = SubResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 140, 190 )
+rect_pivot_offset = Vector2( 70, 95 )
+mouse_filter = 2
+texture = ExtResource( 3 )
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

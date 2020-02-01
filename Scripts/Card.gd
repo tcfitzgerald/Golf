@@ -10,6 +10,7 @@ export(Texture) var card_back_texture
 # onready
 onready var animate = $AnimationPlayer
 onready var sprite = $Sprite
+onready var textureRect = $TextureRect
 
 # signals
 signal card_clicked(card)
@@ -17,7 +18,7 @@ signal card_clicked(card)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	sprite.texture = card_front_texture
+	textureRect.texture = card_front_texture
 
 
 func _on_Button_pressed() -> void:
@@ -27,10 +28,10 @@ func blink():
 	animate.play("Blink")
 	
 func shake():
-	animate.play("Shake")
+	animate.play("TextureShake")
 	
 func change_card_texture(new_texture):
 	if new_texture == "back":
-		sprite.texture = card_back_texture
+		textureRect.texture = card_back_texture
 	elif new_texture == "front":
-		sprite.texture = card_front_texture
+		textureRect.texture = card_front_texture

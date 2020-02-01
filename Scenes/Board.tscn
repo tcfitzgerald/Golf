@@ -83,6 +83,10 @@ position = Vector2( 880, 200 )
 position = Vector2( 180, 20 )
 
 [node name="DeckPile" parent="." instance=ExtResource( 6 )]
+margin_left = 21.6088
+margin_top = -4.67218
+margin_right = 164.609
+margin_bottom = 185.328
 
 [node name="GameOverMenu" parent="." instance=ExtResource( 7 )]
 
