@@ -3,6 +3,7 @@ extends Node2D
 # onready
 onready var cardHolder = $Cards
 onready var tween = $Tween
+onready var audioPlayer = $AudioStreamPlayer
 onready var board = get_parent()
 
 # signals
@@ -36,6 +37,8 @@ func move_card_to_waste_pile(card, play_tween = true, play_flip = false):
 
 	else:
 		card.position = cardHolder.get_parent().position
+	if Settings.play_sfx == true:
+		audioPlayer.play()
 	var cardButton = card.get_node("Button")
 	cardButton.disabled = true
 	emit_signal("check_win")

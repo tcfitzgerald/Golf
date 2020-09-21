@@ -21,11 +21,17 @@ onready var boardScoreLabel = $BoardScoreLabel
 onready var gameOverTimer = $GameOverTimer
 onready var winMenu = $WinMenu
 onready var winTimer = $WinTimer
+onready var audioPlayer = $AudioStreamPlayer
+onready var boardTimeLabel = $BoardTimeLabel
+onready var timeLabel = $GameOverMenu.timeLabel
 
 var card_offset = 30
 var tableau_count = 7
 var cards_per_tableau = 5
 var score = 0 setget set_score
+var time = 0
+var time_mult = 1
+var str_elapsed = ""
 
 
 
@@ -38,6 +44,17 @@ onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tablea
 func _ready() -> void:
 	set_score(35)
 	deal_cards()
+	set_process(true)
+
+func _process(delta: float) -> void:
+	time += delta * time_mult
+	var minutes = int(time) / 60
+	var seconds = int(time) % 60
+	update_time_label(seconds, minutes)
+
+func update_time_label(seconds, minutes):
+	str_elapsed = "%02d:%02d" % [minutes, seconds]
+	boardTimeLabel.text = "Time: " + str(str_elapsed)
 
 func set_score(value):
 	score = value
@@ -77,6 +94,7 @@ func refresh_waste_pile():
 		var card = deck.get_top_card()
 		var move = CardMove.new(card, card.get_parent(), card.position)
 		moves.append(move)
+		#audioPlayer.play(0.310)
 		wastePile.move_card_to_waste_pile(card, false, true)
 		
 func check_valid_moves():
@@ -87,7 +105,7 @@ func check_valid_moves():
 			if wasteCard == null:
 				return top_card
 			if (top_card.int_value == 0 or wasteCard.int_value == 0):
-					return top_card
+				return top_card
 			var cardMinusOne = wasteCard.int_value - 1
 			var cardPlusOne = wasteCard.int_value + 1
 			if wasteCard.int_value == 13 and (Settings.allow_queens_on_kings == false or Settings.turn_corners == false):
@@ -123,13 +141,17 @@ func check_win():
 
 			
 func gameover():
+	set_process(false)
 	gameOverTimer.start()
 	
 func win():
+	set_process(false)
 	winTimer.start()
 	
 func undo():
 	if moves.size() > 0:
+		if Settings.play_sfx == true:
+			audioPlayer.play(0.300)
 		var move = moves.back()
 		var parent = move.cardParent
 		var card = move.card
@@ -147,6 +169,7 @@ func undo():
 		var current_score = 0
 		for tableau in tableaus:
 			current_score += tableau.get_card_count()
+		
 		set_score(current_score)
 	else:
 		return
@@ -170,6 +193,7 @@ func hint():
 func _on_GameOverTimer_timeout() -> void:
 	var highScore = score
 	scoreLabel.text = "Score: " + str(highScore)
+	timeLabel.text = "Time: " + str(str_elapsed)
 	gameOver.popup()
 
 

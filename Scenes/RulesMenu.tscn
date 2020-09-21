@@ -4,10 +4,11 @@
 [ext_resource path="res://Scripts/RulesMenu.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFontData" id=1]
-font_path = "res://Fonts/Kenney Future Narrow.ttf"
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
 
 [sub_resource type="DynamicFont" id=2]
 size = 50
+use_filter = true
 font_data = SubResource( 1 )
 
 [sub_resource type="DynamicFontData" id=3]
@@ -23,6 +24,9 @@ anchor_bottom = 1.0
 rect_min_size = Vector2( 1024, 600 )
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -40,24 +44,24 @@ custom_constants/margin_left = 10
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 1014.0
-margin_bottom = 600.0
+margin_bottom = 602.0
 custom_constants/separation = 20
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_left = 414.0
-margin_right = 589.0
-margin_bottom = 57.0
+margin_left = 427.0
+margin_right = 576.0
+margin_bottom = 60.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 2 )
 text = "Rules"
 align = 1
+uppercase = true
 
 [node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer"]
-editor/display_folded = true
-margin_top = 77.0
+margin_top = 80.0
 margin_right = 1004.0
-margin_bottom = 537.0
+margin_bottom = 540.0
 rect_min_size = Vector2( 1000, 460 )
 rect_clip_content = true
 
@@ -66,7 +70,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 custom_constants/margin_left = 10
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer"]
+[node name="HowToPlayLabel" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer"]
 margin_left = 10.0
 margin_right = 990.0
 margin_bottom = 459.0
@@ -91,14 +95,13 @@ Turning the corner is permitted so that a King can be played on top of an Ace, a
 One or both of the Jokers may be added to the deck and used as wild cards that represent any value.
 The foundation pile can start off empty, so players can choose one of the exposed cards to move them to the foundation for a \"head-start\"."
 autowrap = true
-percent_visible = -0.00219298
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 367.0
-margin_top = 557.0
-margin_right = 636.0
-margin_bottom = 587.0
+margin_left = 374.0
+margin_top = 560.0
+margin_right = 630.0
+margin_bottom = 592.0
 size_flags_horizontal = 4
 size_flags_vertical = 12
-text = "back to main menu"
+text = "BACK TO MAIN MENU"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]

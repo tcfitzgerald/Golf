@@ -10,6 +10,9 @@ var _settings = {
 		"turn_corners": false,
 		"jokers_wildcard": false,
 		"empty_foundation": false
+	},
+	"sound": {
+		"play_sfx": true
 	}
 }
 # variations
@@ -17,6 +20,9 @@ var allow_queens_on_kings
 var turn_corners
 var jokers_wildcard
 var empty_foundation
+
+# sound
+var play_sfx
 
 func _ready() -> void:
 	load_settings()
@@ -39,6 +45,7 @@ func load_settings():
 		turn_corners = _settings["variations"]["turn_corners"]
 		jokers_wildcard = _settings["variations"]["jokers_wildcard"]
 		empty_foundation = _settings["variations"]["empty_foundation"]
+		play_sfx = _settings["sound"]["play_sfx"]
 		return null
 		
 	for section in _settings.keys():
@@ -49,11 +56,12 @@ func load_settings():
 	turn_corners = _settings["variations"]["turn_corners"]
 	jokers_wildcard = _settings["variations"]["jokers_wildcard"]
 	empty_foundation = _settings["variations"]["empty_foundation"]
+	play_sfx = _settings["sound"]["play_sfx"]
 			
-func get_setting(key):
-	return _settings["variations"][key]
+func get_setting(section, key):
+	return _settings[section][key]
 	
-func save_setting(key, value):
-	_config_file.set_value("variations", key, value)
+func save_setting(section, key, value):
+	_config_file.set_value(section, key, value)
 			
 	_config_file.save(SAVE_PATH)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Board.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=2]
@@ -8,14 +8,23 @@
 [ext_resource path="res://Scenes/DeckPile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/GameOverMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/WinMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Sounds/240777__f4ngy__dealing-card.wav" type="AudioStream" id=9]
 
-[sub_resource type="Theme" id=1]
+[sub_resource type="DynamicFontData" id=1]
+antialiased = false
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+use_filter = true
+font_data = SubResource( 1 )
+
+[sub_resource type="Theme" id=3]
 Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
 Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = null
+Button/fonts/font = SubResource( 2 )
 Button/styles/disabled = null
 Button/styles/focus = null
 Button/styles/hover = null
@@ -31,18 +40,31 @@ Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
 Label/styles/normal = null
 
-[sub_resource type="DynamicFontData" id=2]
-font_path = "res://Fonts/Kenney Future Narrow.ttf"
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=5]
 size = 30
-font_data = SubResource( 2 )
+use_filter = true
+font_data = SubResource( 4 )
+
+[sub_resource type="DynamicFontData" id=6]
+antialiased = false
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=7]
+size = 30
+use_filter = true
+font_data = SubResource( 6 )
 
 [node name="Board" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 1 )
+theme = SubResource( 3 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -53,7 +75,20 @@ __meta__ = {
 }
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
-editor/display_folded = true
+
+[node name="HBoxContainer" parent="UI/MarginContainer" index="0"]
+margin_right = 280.0
+
+[node name="NewGameButton" parent="UI/MarginContainer/HBoxContainer" index="0"]
+margin_right = 91.0
+
+[node name="UndoButton" parent="UI/MarginContainer/HBoxContainer" index="1"]
+margin_left = 101.0
+margin_right = 183.0
+
+[node name="HintButton" parent="UI/MarginContainer/HBoxContainer" index="2"]
+margin_left = 193.0
+margin_right = 275.0
 
 [node name="Deck" parent="." instance=ExtResource( 3 )]
 position = Vector2( 40, 20 )
@@ -101,14 +136,34 @@ wait_time = 5.0
 one_shot = true
 
 [node name="BoardScoreLabel" type="Label" parent="."]
-margin_left = 816.116
-margin_top = 16.2972
-margin_right = 981.116
-margin_bottom = 51.2972
+margin_left = 816.458
+margin_top = 22.0
+margin_right = 1011.46
+margin_bottom = 60.0
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 3 )
-text = "Score: 35"
-align = 2
+custom_fonts/font = SubResource( 5 )
+text = "SCORE: 35"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BoardTimeLabel" type="Label" parent="."]
+margin_left = 814.915
+margin_top = 53.5357
+margin_right = 979.915
+margin_bottom = 88.5357
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 7 )
+text = "TIME: 1:20:30"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -10.0
 [connection signal="new_game" from="UI" to="." method="_on_UI_new_game"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/UndoButton" to="." method="_on_UndoButton_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/HintButton" to="." method="_on_HintButton_pressed"]
