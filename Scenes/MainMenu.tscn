@@ -42,9 +42,9 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 133.0
-margin_top = 169.0
+margin_top = 145.0
 margin_right = 890.0
-margin_bottom = 431.0
+margin_bottom = 455.0
 __meta__ = {
 "_edit_group_": true
 }
@@ -60,25 +60,29 @@ uppercase = true
 [node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 122.0
 margin_right = 757.0
-margin_bottom = 154.0
+margin_bottom = 166.0
+rect_min_size = Vector2( 0, 44 )
 text = "PLAY"
 
 [node name="RulesButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 158.0
+margin_top = 170.0
 margin_right = 757.0
-margin_bottom = 190.0
-text = "RULES"
+margin_bottom = 214.0
+rect_min_size = Vector2( 0, 44 )
+text = "HOW TO PLAY"
 
 [node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 194.0
+margin_top = 218.0
 margin_right = 757.0
-margin_bottom = 226.0
+margin_bottom = 262.0
+rect_min_size = Vector2( 0, 44 )
 text = "OPTIONS"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 230.0
+margin_top = 266.0
 margin_right = 757.0
-margin_bottom = 262.0
+margin_bottom = 310.0
+rect_min_size = Vector2( 0, 44 )
 text = "QUIT"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/RulesButton" to="." method="_on_RulesButton_pressed"]

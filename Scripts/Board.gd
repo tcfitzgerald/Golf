@@ -17,12 +17,12 @@ onready var wastePileCards = $WastePile/Cards
 onready var deckButton = $DeckPile
 onready var gameOver = $GameOverMenu
 onready var scoreLabel = $GameOverMenu.scoreLabel
-onready var boardScoreLabel = $BoardScoreLabel
+onready var boardScoreLabel = $UI/MarginContainer/VBoxContainer/BoardScoreLabel
 onready var gameOverTimer = $GameOverTimer
 onready var winMenu = $WinMenu
 onready var winTimer = $WinTimer
 onready var audioPlayer = $AudioStreamPlayer
-onready var boardTimeLabel = $BoardTimeLabel
+onready var boardTimeLabel = $UI/MarginContainer/VBoxContainer/BoardTimeLabel
 onready var timeLabel = $GameOverMenu.timeLabel
 
 var card_offset = 30
@@ -44,7 +44,8 @@ onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tablea
 func _ready() -> void:
 	set_score(35)
 	deal_cards()
-	set_process(true)
+	call_deferred("set_process", true)
+	#set_process(false)
 
 func _process(delta: float) -> void:
 	time += delta * time_mult
@@ -73,7 +74,7 @@ func deal_cards():
 		for j in range(0,tableau_count):
 			var selected_card = deck.get_top_card()
 			deckCards.remove_child(selected_card)
-			duration += 1
+			duration += .5
 			tableaus[j].add_card_to_tableau(selected_card, i * card_offset, duration * .05)
 		
 				
@@ -88,6 +89,7 @@ func deal_cards():
 	if not Settings.empty_foundation:		
 		var last_card = deck.get_top_card()
 		wastePile.move_card_to_waste_pile(last_card, false)
+
 
 func refresh_waste_pile():
 	if deckCards.get_child_count() > 0:
@@ -150,8 +152,6 @@ func win():
 	
 func undo():
 	if moves.size() > 0:
-		if Settings.play_sfx == true:
-			audioPlayer.play(0.300)
 		var move = moves.back()
 		var parent = move.cardParent
 		var card = move.card
@@ -222,8 +222,14 @@ func _on_HintButton_pressed() -> void:
 
 
 func _on_DeckPile_pressed() -> void:
+	if Settings.play_sfx == true:
+		audioPlayer.play()
 	refresh_waste_pile()
 	if deckCards.get_child_count() == 0:
 		deckButton.hide()
 		check_win()
 		check_game_over()
+
+
+func _on_MainMenu_pressed() -> void:
+	get_tree().change_scene("res://Scenes/MainMenu.tscn")

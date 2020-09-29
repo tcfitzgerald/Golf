@@ -1,6 +1,7 @@
 extends Control
 
-onready var scoreLabel = $MarginContainer/VBoxContainer/ScoreLabel
+onready var scoreLabel = $MarginContainer/VBoxContainer/BoardScoreLabel
+onready var timeLabel = $MarginContainer/VBoxContainer/BoardScoreLabel
 
 signal new_game
 

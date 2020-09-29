@@ -1,61 +1,109 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
-[ext_resource path="res://main_menu_theme.tres" type="Theme" id=2]
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 30
+use_filter = true
+font_data = SubResource( 4 )
+
+[sub_resource type="DynamicFontData" id=6]
+antialiased = false
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=7]
+size = 30
+use_filter = true
+font_data = SubResource( 6 )
 
 [node name="UI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 1024, 600 )
-custom_constants/margin_left = 5
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-margin_left = 5.0
-margin_top = 560.0
-margin_right = 271.0
-margin_bottom = 600.0
-size_flags_horizontal = 0
+margin_left = 10.0
+margin_top = 718.0
+margin_right = 1014.0
+margin_bottom = 758.0
+rect_min_size = Vector2( 1000, 0 )
 size_flags_vertical = 8
 custom_constants/separation = 10
 
-[node name="NewGameButton" type="Button" parent="MarginContainer/HBoxContainer"]
-margin_right = 82.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 82, 40 )
-text = "New Game"
-
 [node name="UndoButton" type="Button" parent="MarginContainer/HBoxContainer"]
-margin_left = 92.0
-margin_right = 174.0
+margin_right = 82.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 82, 40 )
 text = "Undo"
 
 [node name="HintButton" type="Button" parent="MarginContainer/HBoxContainer"]
-margin_left = 184.0
-margin_right = 266.0
+margin_left = 92.0
+margin_right = 174.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 82, 40 )
 text = "Hint"
 
+[node name="MainMenu" type="Button" parent="MarginContainer/HBoxContainer"]
+margin_left = 184.0
+margin_right = 267.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 82, 40 )
+text = "Main Menu"
+
+[node name="NewGameButton" type="Button" parent="MarginContainer/HBoxContainer"]
+margin_left = 277.0
+margin_right = 359.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 82, 40 )
+text = "New Game"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 1024.0
-margin_right = 1024.0
+margin_left = 829.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 86.0
 mouse_filter = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 
-[node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-visible = false
-margin_right = 86.0
-margin_bottom = 18.0
-theme = ExtResource( 2 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "Score: 35"
-align = 2
+[node name="BoardScoreLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_right = 185.0
+margin_bottom = 36.0
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 5 )
+text = "SCORE: 35"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BoardTimeLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 185.0
+margin_bottom = 76.0
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 7 )
+text = "TIME: 1:20:30"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="MarginContainer/HBoxContainer/NewGameButton" to="." method="_on_NewGameButton_pressed"]

@@ -5,6 +5,7 @@ onready var cards = $Cards
 onready var wastePile = get_parent().get_node("WastePile")
 onready var board = get_parent()
 onready var tween = $Tween
+onready var audioPlayer = $AudioStreamPlayer
 var cardScene = preload("res://Scenes/Card.tscn")
 var cardMove = preload("res://Scripts/Move.gd")
 
@@ -44,6 +45,7 @@ func _on_tableau_card_clicked(card):
 		var wasteCard = wastePile.get_top_card()
 		
 		if not wasteCard:
+			play_audio()
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
 			wastePile.move_card_to_waste_pile(card)
@@ -54,6 +56,7 @@ func _on_tableau_card_clicked(card):
 			return
 			
 		if (card.int_value == 0 or wasteCard.int_value == 0):
+			play_audio()
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
 			wastePile.move_card_to_waste_pile(card)
@@ -66,11 +69,13 @@ func _on_tableau_card_clicked(card):
 		if Settings.turn_corners == true:
 				if (card.int_value == 1 and wasteCard.int_value == 13 or 
 				card.int_value == 13 and wasteCard.int_value == 1):
+					play_audio()
 					var move = CardMove.new(card, card.get_parent(), card.position)
 					board.moves.append(move)
 					wastePile.move_card_to_waste_pile(card)
 		
 		if card.int_value == cardMinusOne or card.int_value == cardPlusOne:
+			play_audio()
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
 			wastePile.move_card_to_waste_pile(card)
@@ -82,3 +87,7 @@ func _on_tableau_card_clicked(card):
 	for tableau in board.tableaus:
 		current_score += tableau.get_card_count()
 	board.set_score(current_score)
+
+func play_audio():
+	if Settings.play_sfx == true:
+		audioPlayer.play()

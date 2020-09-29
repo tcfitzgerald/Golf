@@ -20,7 +20,6 @@ use_filter = true
 font_data = SubResource( 3 )
 
 [node name="GameOverMenu" type="Popup"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
@@ -50,9 +49,9 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 110.0
-margin_top = 139.0
+margin_top = 115.0
 margin_right = 690.0
-margin_bottom = 460.0
+margin_bottom = 484.0
 
 [node name="ScoreLabel" type="Label" parent="CenterContainer/VBoxContainer"]
 margin_right = 580.0
@@ -83,25 +82,29 @@ uppercase = true
 [node name="UndoLastMoveButton" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 181.0
 margin_right = 580.0
-margin_bottom = 213.0
+margin_bottom = 225.0
+rect_min_size = Vector2( 0, 44 )
 text = "UNDO LAST MOVE"
 
 [node name="PlayAgainButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 217.0
+margin_top = 229.0
 margin_right = 580.0
-margin_bottom = 249.0
+margin_bottom = 273.0
+rect_min_size = Vector2( 0, 44 )
 text = "PLAY AGAIN"
 
 [node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 253.0
+margin_top = 277.0
 margin_right = 580.0
-margin_bottom = 285.0
+margin_bottom = 321.0
+rect_min_size = Vector2( 0, 44 )
 text = "BACK TO MAIN MENU"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 289.0
+margin_top = 325.0
 margin_right = 580.0
-margin_bottom = 321.0
+margin_bottom = 369.0
+rect_min_size = Vector2( 0, 44 )
 text = "QUIT"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/UndoLastMoveButton" to="." method="_on_UndoLastMoveButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayAgainButton" to="." method="_on_PlayAgainButton_pressed"]
