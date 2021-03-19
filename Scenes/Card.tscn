@@ -99,4 +99,7 @@ rect_min_size = Vector2( 140, 190 )
 rect_pivot_offset = Vector2( 70, 95 )
 mouse_filter = 2
 texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

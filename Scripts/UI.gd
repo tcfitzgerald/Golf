@@ -9,4 +9,5 @@ func _ready():
 	pass
 
 func _on_NewGameButton_pressed() -> void:
-	emit_signal("new_game")
+		Stats.set_num_games_lost()
+		emit_signal("new_game")

@@ -59,75 +59,81 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Deck" parent="." instance=ExtResource( 3 )]
+position = Vector2( 396.605, 493.98 )
+
+[node name="Tableau1" parent="." instance=ExtResource( 4 )]
+position = Vector2( 40, 126 )
+
+[node name="Tableau2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 180, 126 )
+
+[node name="Tableau3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 320, 126 )
+
+[node name="Tableau4" parent="." instance=ExtResource( 4 )]
+position = Vector2( 460, 126 )
+
+[node name="Tableau5" parent="." instance=ExtResource( 4 )]
+position = Vector2( 600, 126 )
+
+[node name="Tableau6" parent="." instance=ExtResource( 4 )]
+position = Vector2( 740, 126 )
+
+[node name="Tableau7" parent="." instance=ExtResource( 4 )]
+position = Vector2( 880, 126 )
+
+[node name="WastePile" parent="." instance=ExtResource( 5 )]
+position = Vector2( 536.605, 493.98 )
+
 [node name="UI" parent="." instance=ExtResource( 2 )]
 margin_top = 20.0
 
-[node name="HBoxContainer" parent="UI/MarginContainer" index="0"]
-margin_top = 698.0
-margin_bottom = 738.0
+[node name="HBoxContainer" parent="UI/MarginContainer" index="1"]
+margin_top = 688.0
+margin_bottom = 728.0
 
-[node name="MainMenu" parent="UI/MarginContainer/HBoxContainer" index="2"]
-margin_right = 277.0
+[node name="NewGameButton" parent="UI/MarginContainer/HBoxContainer" index="2"]
+margin_right = 275.0
 
-[node name="NewGameButton" parent="UI/MarginContainer/HBoxContainer" index="3"]
-margin_left = 287.0
-margin_right = 378.0
+[node name="Control" parent="UI/MarginContainer/HBoxContainer" index="3"]
+margin_left = 285.0
+margin_right = 900.0
 
-[node name="Deck" parent="." instance=ExtResource( 3 )]
-position = Vector2( 40, 20 )
-
-[node name="Tableau1" parent="." instance=ExtResource( 4 )]
-position = Vector2( 40, 200 )
-
-[node name="Tableau2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 180, 200 )
-
-[node name="Tableau3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 320, 200 )
-
-[node name="Tableau4" parent="." instance=ExtResource( 4 )]
-position = Vector2( 460, 200 )
-
-[node name="Tableau5" parent="." instance=ExtResource( 4 )]
-position = Vector2( 600, 200 )
-
-[node name="Tableau6" parent="." instance=ExtResource( 4 )]
-position = Vector2( 740, 200 )
-
-[node name="Tableau7" parent="." instance=ExtResource( 4 )]
-position = Vector2( 880, 200 )
-
-[node name="WastePile" parent="." instance=ExtResource( 5 )]
-position = Vector2( 180, 20 )
+[node name="MainMenu" parent="UI/MarginContainer/HBoxContainer" index="4"]
+margin_left = 910.0
+margin_right = 1003.0
 
 [node name="DeckPile" parent="." instance=ExtResource( 6 )]
-margin_left = 21.6088
-margin_top = -4.67218
-margin_right = 164.609
-margin_bottom = 185.328
+margin_left = 378.214
+margin_top = 469.307
+margin_right = 521.214
+margin_bottom = 659.308
 
 [node name="GameOverMenu" parent="." instance=ExtResource( 7 )]
 
 [node name="GameOverTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.0
 one_shot = true
 
 [node name="WinMenu" parent="." instance=ExtResource( 8 )]
-visible = false
 
 [node name="WinTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.0
 one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 volume_db = -15.0
+
+[node name="UndoTween" type="Tween" parent="."]
+[connection signal="top_card_clicked" from="Deck" to="." method="_on_Deck_top_card_clicked"]
+[connection signal="check_win" from="WastePile" to="." method="_on_WastePile_check_win"]
 [connection signal="new_game" from="UI" to="." method="_on_UI_new_game"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/UndoButton" to="." method="_on_UndoButton_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/HintButton" to="." method="_on_HintButton_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/MainMenu" to="." method="_on_MainMenu_pressed"]
-[connection signal="top_card_clicked" from="Deck" to="." method="_on_Deck_top_card_clicked"]
-[connection signal="check_win" from="WastePile" to="." method="_on_WastePile_check_win"]
+[connection signal="confirmed" from="UI/ConfirmationDialog" to="." method="_on_ConfirmationDialog_confirmed"]
 [connection signal="pressed" from="DeckPile" to="." method="_on_DeckPile_pressed"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
 [connection signal="timeout" from="WinTimer" to="." method="_on_WinTimer_timeout"]

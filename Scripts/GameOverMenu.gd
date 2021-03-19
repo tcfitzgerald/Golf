@@ -4,9 +4,12 @@ extends Control
 onready var board = get_parent()
 onready var scoreLabel = $CenterContainer/VBoxContainer/ScoreLabel
 onready var timeLabel = $CenterContainer/VBoxContainer/TimeLabel
+onready var quitButton = $CenterContainer/VBoxContainer/QuitButton
 
 func _ready():
-	pass
+	var os = OS.get_name()
+	if os == "iOS":
+		quitButton.visible = false
 
 
 func _on_PlayAgainButton_pressed() -> void:
@@ -21,6 +24,7 @@ func _on_UndoLastMoveButton_pressed() -> void:
 	hide()
 	board.set_process(true)
 	board.undo()
+	board.enable_ui()
 
 
 func _on_MainMenuButton_pressed() -> void:

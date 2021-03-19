@@ -25,6 +25,15 @@ onready var audioPlayer = $AudioStreamPlayer
 onready var boardTimeLabel = $UI/MarginContainer/VBoxContainer/BoardTimeLabel
 onready var timeLabel = $GameOverMenu.timeLabel
 
+onready var undoButton = $UI/MarginContainer/HBoxContainer/UndoButton
+onready var hintButton = $UI/MarginContainer/HBoxContainer/HintButton
+onready var newGameButton = $UI/MarginContainer/HBoxContainer/NewGameButton
+onready var mainMenuButton = $UI/MarginContainer/HBoxContainer/MainMenu
+
+onready var mainMenuConfirmation = $UI/ConfirmationDialog
+
+onready var undoTween = $UndoTween
+
 var card_offset = 30
 var tableau_count = 7
 var cards_per_tableau = 5
@@ -32,7 +41,11 @@ var score = 0 setget set_score
 var time = 0
 var time_mult = 1
 var str_elapsed = ""
+var current_chain = 0
+var longest_chain = Stats.longest_chain
+var best_time = Stats.best_time
 
+var GameCenter = null
 
 
 var moves = []
@@ -45,6 +58,8 @@ func _ready() -> void:
 	set_score(35)
 	deal_cards()
 	call_deferred("set_process", true)
+	Stats.set_num_games_played()
+	enable_ui()
 	#set_process(false)
 
 func _process(delta: float) -> void:
@@ -52,6 +67,18 @@ func _process(delta: float) -> void:
 	var minutes = int(time) / 60
 	var seconds = int(time) % 60
 	update_time_label(seconds, minutes)
+
+func enable_ui():
+	undoButton.disabled = false
+	hintButton.disabled = false
+	newGameButton.disabled = false
+	mainMenuButton.disabled = false
+
+func disable_ui():
+	undoButton.disabled = true
+	hintButton.disabled = true
+	newGameButton.disabled = true
+	mainMenuButton.disabled = true
 
 func update_time_label(seconds, minutes):
 	str_elapsed = "%02d:%02d" % [minutes, seconds]
@@ -96,6 +123,8 @@ func refresh_waste_pile():
 		var card = deck.get_top_card()
 		var move = CardMove.new(card, card.get_parent(), card.position)
 		moves.append(move)
+		# set current_chain back to zero
+		current_chain = 0
 		#audioPlayer.play(0.310)
 		wastePile.move_card_to_waste_pile(card, false, true)
 		
@@ -143,13 +172,15 @@ func check_win():
 
 			
 func gameover():
+	disable_ui()
 	set_process(false)
 	gameOverTimer.start()
 	
 func win():
+	disable_ui()
 	set_process(false)
 	winTimer.start()
-	
+
 func undo():
 	if moves.size() > 0:
 		var move = moves.back()
@@ -159,7 +190,10 @@ func undo():
 		card.get_parent().remove_child(card)
 		parent.add_child(card)
 		card.set_owner(parent)
-		card.position = cardPosition
+		#card.position = cardPosition
+		undoTween.interpolate_property(card, "position", card.position, 
+			Vector2(cardPosition.x, cardPosition.y), 0.35, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		undoTween.start()
 		var cardButton = card.get_node("Button")
 		cardButton.disabled = false
 		moves.pop_back()
@@ -171,6 +205,9 @@ func undo():
 			current_score += tableau.get_card_count()
 		
 		set_score(current_score)
+		
+		# set current_chain back to zero
+		current_chain = 0
 	else:
 		return
 
@@ -194,6 +231,9 @@ func _on_GameOverTimer_timeout() -> void:
 	var highScore = score
 	scoreLabel.text = "Score: " + str(highScore)
 	timeLabel.text = "Time: " + str(str_elapsed)
+	Stats.set_high_score(score)
+	Stats.set_num_games_lost()
+	Stats.set_longest_chain(longest_chain)
 	gameOver.popup()
 
 
@@ -210,6 +250,10 @@ func _on_UndoButton_pressed() -> void:
 
 
 func _on_WinTimer_timeout() -> void:
+	Stats.set_high_score(score)
+	Stats.set_num_games_won()
+	Stats.set_fewest_moves(moves.size())
+	Stats.set_best_time(time)
 	winMenu.popup()
 
 
@@ -232,4 +276,8 @@ func _on_DeckPile_pressed() -> void:
 
 
 func _on_MainMenu_pressed() -> void:
+	mainMenuConfirmation.popup_centered()
+
+
+func _on_ConfirmationDialog_confirmed() -> void:
 	get_tree().change_scene("res://Scenes/MainMenu.tscn")

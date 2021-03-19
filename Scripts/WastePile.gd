@@ -38,6 +38,10 @@ func move_card_to_waste_pile(card, play_tween = true, play_flip = false):
 	else:
 		card.position = cardHolder.get_parent().position
 
+	board.current_chain = board.current_chain + 1
+	if board.current_chain > board.longest_chain:
+		board.longest_chain = board.current_chain
+
 	var cardButton = card.get_node("Button")
 	cardButton.disabled = true
 	emit_signal("check_win")

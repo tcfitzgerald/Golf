@@ -2,9 +2,12 @@ extends Popup
 
 # onready
 onready var board = get_parent()
+onready var quitButton = $CenterContainer/VBoxContainer/QuitButton
 
 func _ready():
-	pass
+	var os = OS.get_name()
+	if os == "iOS":
+		quitButton.visible = false
 
 
 func _on_PlayAgainButton_pressed() -> void:

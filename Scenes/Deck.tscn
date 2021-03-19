@@ -12,6 +12,9 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 140, 190 )
 rect_scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Cards" type="Node2D" parent="."]
 z_index = -2

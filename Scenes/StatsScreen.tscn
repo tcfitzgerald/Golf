@@ -1,0 +1,266 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://main_menu_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/StatsScreen.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://Fonts/Roboto/Roboto-Medium.ttf"
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+font_data = SubResource( 3 )
+
+[node name="StatsScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.027451, 0.388235, 0.141176, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 84.0
+margin_bottom = -84.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 580.0
+custom_constants/separation = 10
+
+[node name="TitleContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 984.0
+margin_bottom = 118.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatsTitleLabel" type="Label" parent="MarginContainer/VBoxContainer/TitleContainer"]
+margin_left = 337.0
+margin_right = 646.0
+margin_bottom = 118.0
+custom_fonts/font = SubResource( 2 )
+text = "STATS"
+align = 1
+uppercase = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_left = 303.0
+margin_top = 128.0
+margin_right = 681.0
+margin_bottom = 412.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="GamesPlayedContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_right = 378.0
+margin_bottom = 44.0
+custom_constants/separation = 125
+
+[node name="GamesPlayedLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GamesPlayedContainer"]
+margin_top = -1.0
+margin_right = 196.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "GAMES PLAYED: "
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GamesPlayedValue" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GamesPlayedContainer"]
+margin_left = 321.0
+margin_top = -1.0
+margin_right = 335.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "0"
+align = 2
+uppercase = true
+
+[node name="GamesWonContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 378.0
+margin_bottom = 92.0
+custom_constants/separation = 160
+
+[node name="GamesWonLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GamesWonContainer"]
+margin_top = -1.0
+margin_right = 161.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "GAMES WON: "
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GamesWonValue" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GamesWonContainer"]
+margin_left = 321.0
+margin_top = -1.0
+margin_right = 335.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "0"
+uppercase = true
+
+[node name="GamesLostContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 378.0
+margin_bottom = 140.0
+custom_constants/separation = 155
+
+[node name="GamesLostLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GamesLostContainer"]
+margin_top = -1.0
+margin_right = 165.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "GAMES LOST: "
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GamesLostValue" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GamesLostContainer"]
+margin_left = 320.0
+margin_top = -1.0
+margin_right = 334.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "0"
+uppercase = true
+
+[node name="WinPercentageContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_top = 144.0
+margin_right = 378.0
+margin_bottom = 188.0
+custom_constants/separation = 95
+
+[node name="WinPercentageLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/WinPercentageContainer"]
+margin_top = -1.0
+margin_right = 223.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "WIN PERCENTAGE: "
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WinPercentageValue" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/WinPercentageContainer"]
+margin_left = 318.0
+margin_top = -1.0
+margin_right = 378.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "100%"
+uppercase = true
+
+[node name="BestTimeContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 378.0
+margin_bottom = 236.0
+custom_constants/separation = 180
+
+[node name="BestTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/BestTimeContainer"]
+margin_top = -1.0
+margin_right = 131.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "BEST TIME:"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BestTimeValue" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/BestTimeContainer"]
+margin_left = 311.0
+margin_top = -1.0
+margin_right = 374.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+size_flags_horizontal = 8
+custom_fonts/font = SubResource( 4 )
+text = "10:00"
+uppercase = true
+
+[node name="LongestChainContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_top = 240.0
+margin_right = 378.0
+margin_bottom = 284.0
+custom_constants/separation = 120
+
+[node name="LongestChainLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/LongestChainContainer"]
+margin_top = -1.0
+margin_right = 199.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "LONGEST CHAIN:"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LongestChainValue" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/LongestChainContainer"]
+margin_left = 319.0
+margin_top = -1.0
+margin_right = 333.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 0, 44 )
+custom_fonts/font = SubResource( 4 )
+text = "0"
+uppercase = true
+
+[node name="Spacer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 422.0
+margin_right = 984.0
+margin_bottom = 422.0
+
+[node name="MainMenuButtonContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 432.0
+margin_right = 984.0
+margin_bottom = 464.0
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer/MainMenuButtonContainer"]
+margin_left = 364.0
+margin_right = 620.0
+margin_bottom = 32.0
+text = "BACK TO MAIN MENU"
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenuButtonContainer/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
