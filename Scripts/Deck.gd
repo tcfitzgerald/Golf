@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name Deck
 # onready
 onready var cardHolder = $Cards
 
@@ -7,6 +7,7 @@ onready var cardHolder = $Cards
 var cardScene = preload("res://Scenes/Card.tscn")
 
 # signals
+# warning-ignore:unused_signal
 signal top_card_clicked
 
 var cards = [

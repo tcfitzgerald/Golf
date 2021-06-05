@@ -88,16 +88,10 @@ position = Vector2( 536.605, 493.98 )
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
 margin_top = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HBoxContainer" parent="UI/MarginContainer" index="1"]
-margin_top = 688.0
-margin_bottom = 728.0
-
-[node name="NewGameButton" parent="UI/MarginContainer/HBoxContainer" index="2"]
-margin_right = 275.0
-
-[node name="Control" parent="UI/MarginContainer/HBoxContainer" index="3"]
-margin_left = 285.0
+[node name="NewGameButton" parent="UI/MarginContainer/HBoxContainer" index="3"]
 margin_right = 900.0
 
 [node name="MainMenu" parent="UI/MarginContainer/HBoxContainer" index="4"]
@@ -127,13 +121,13 @@ stream = ExtResource( 9 )
 volume_db = -15.0
 
 [node name="UndoTween" type="Tween" parent="."]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="top_card_clicked" from="Deck" to="." method="_on_Deck_top_card_clicked"]
 [connection signal="check_win" from="WastePile" to="." method="_on_WastePile_check_win"]
 [connection signal="new_game" from="UI" to="." method="_on_UI_new_game"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/UndoButton" to="." method="_on_UndoButton_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/HBoxContainer/HintButton" to="." method="_on_HintButton_pressed"]
-[connection signal="pressed" from="UI/MarginContainer/HBoxContainer/MainMenu" to="." method="_on_MainMenu_pressed"]
-[connection signal="confirmed" from="UI/ConfirmationDialog" to="." method="_on_ConfirmationDialog_confirmed"]
 [connection signal="pressed" from="DeckPile" to="." method="_on_DeckPile_pressed"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
 [connection signal="timeout" from="WinTimer" to="." method="_on_WinTimer_timeout"]

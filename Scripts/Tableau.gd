@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name Tableau
 # onready
 onready var cards = $Cards
 onready var wastePile = get_parent().get_node("WastePile")
@@ -8,15 +8,30 @@ onready var tween = $Tween
 onready var audioPlayer = $AudioStreamPlayer
 var cardScene = preload("res://Scenes/Card.tscn")
 var cardMove = preload("res://Scripts/Move.gd")
+onready var tableau_name = str(self.name).to_lower()
+onready var card_data = {tableau_name: []}
 
 func _ready():
-	cards.connect("card_clicked", self, "_on_tableau_card_clicked")
+	pass
+	#cards.connect("card_clicked", self, "_on_tableau_card_clicked")
 
 func has_cards():
 	return cards.get_child_count() > 0
 
 func get_card_count():
 	return cards.get_child_count()
+	
+func get_cards():
+	var cards_array = []
+	
+	for i in range(0,cards.get_child_count()):
+		var card_data_point = {"int_value": cards.get_child(i).int_value, "suit": cards.get_child(i).suit, "face": cards.get_child(i).face_value}
+		cards_array.append(card_data_point)
+	
+	card_data[tableau_name] = cards_array
+		
+	return card_data
+		
 
 func add_card_to_tableau(selected_card, card_offset, duration = 1):
 	cards.add_child(selected_card)
@@ -48,6 +63,7 @@ func _on_tableau_card_clicked(card):
 			play_audio()
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
+			board.moves_data.append(move.to_json())
 			wastePile.move_card_to_waste_pile(card)
 			var current_score = 0
 			for tableau in board.tableaus:
@@ -59,6 +75,7 @@ func _on_tableau_card_clicked(card):
 			play_audio()
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
+			board.moves_data.append(move.to_json())
 			wastePile.move_card_to_waste_pile(card)
 			
 		var cardMinusOne = wasteCard.int_value - 1
@@ -72,12 +89,14 @@ func _on_tableau_card_clicked(card):
 					play_audio()
 					var move = CardMove.new(card, card.get_parent(), card.position)
 					board.moves.append(move)
+					board.moves_data.append(move.to_json())
 					wastePile.move_card_to_waste_pile(card)
 		
 		if card.int_value == cardMinusOne or card.int_value == cardPlusOne:
 			play_audio()
 			var move = CardMove.new(card, card.get_parent(), card.position)
 			board.moves.append(move)
+			board.moves_data.append(move.to_json())
 			wastePile.move_card_to_waste_pile(card)
 		
 

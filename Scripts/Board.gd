@@ -31,6 +31,7 @@ onready var newGameButton = $UI/MarginContainer/HBoxContainer/NewGameButton
 onready var mainMenuButton = $UI/MarginContainer/HBoxContainer/MainMenu
 
 onready var mainMenuConfirmation = $UI/ConfirmationDialog
+onready var newGameConfirmation = $UI/NewGameConfirmationDialog
 
 onready var undoTween = $UndoTween
 
@@ -44,11 +45,17 @@ var str_elapsed = ""
 var current_chain = 0
 var longest_chain = Stats.longest_chain
 var best_time = Stats.best_time
+var deckcard_data = []
+var valid_moves = []
 
+var card_data: Dictionary = {"data": {"tableaus": [], "deck": {}, "moves": [], "settings": {}}}
 var GameCenter = null
 
+var url = "https://www.joustingknightgames.com/api/v1/gamedata/"
+var api_key = "9e3afbbc1e01b8596077cae553ab4372d77338a2"
 
 var moves = []
+var moves_data = []
 onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tableau6, tableau7]
 
 
@@ -57,6 +64,7 @@ onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tablea
 func _ready() -> void:
 	set_score(35)
 	deal_cards()
+	get_card_data()
 	call_deferred("set_process", true)
 	Stats.set_num_games_played()
 	enable_ui()
@@ -64,6 +72,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	time += delta * time_mult
+# warning-ignore:integer_division
 	var minutes = int(time) / 60
 	var seconds = int(time) % 60
 	update_time_label(seconds, minutes)
@@ -91,6 +100,23 @@ func set_score(value):
 func update_score_label():
 	boardScoreLabel.text = "Score: " + str(score)
 
+func get_deck_card_data():
+	for i in range(0,deckCards.get_child_count()):
+		var deckcard_data_point = {"int_value": deckCards.get_child(i).int_value, "suit": deckCards.get_child(i).suit, "face": deckCards.get_child(i).face_value}
+		deckcard_data.append(deckcard_data_point)
+		deckcard_data.invert()
+
+func get_card_data():
+	# data structure should be
+	# {"data": tableaus: [{"tableau1": [{"int_value": 1, "suit": "clubs", "face": "ace"}]}], "deck": [{"int_value": 1, "suit": "clubs", "face": "ace"}]}
+	var tableaus_array = []
+	for tableau in tableaus:
+		tableaus_array.append(tableau.get_cards())
+
+	get_deck_card_data()
+	card_data["data"]["tableaus"] = tableaus_array
+	card_data["data"]["deck"] = deckcard_data
+
 func deal_cards():
 	Settings.load_settings()
 	
@@ -103,6 +129,7 @@ func deal_cards():
 			deckCards.remove_child(selected_card)
 			duration += .5
 			tableaus[j].add_card_to_tableau(selected_card, i * card_offset, duration * .05)
+
 		
 				
 #	for tableau in tableaus:
@@ -123,6 +150,7 @@ func refresh_waste_pile():
 		var card = deck.get_top_card()
 		var move = CardMove.new(card, card.get_parent(), card.position)
 		moves.append(move)
+		moves_data.append(move.to_json())
 		# set current_chain back to zero
 		current_chain = 0
 		#audioPlayer.play(0.310)
@@ -134,21 +162,26 @@ func check_valid_moves():
 			var top_card = tableau.get_top_tableau_card()
 			var wasteCard = wastePile.get_top_card()
 			if wasteCard == null:
-				return top_card
-			if (top_card.int_value == 0 or wasteCard.int_value == 0):
-				return top_card
-			var cardMinusOne = wasteCard.int_value - 1
-			var cardPlusOne = wasteCard.int_value + 1
-			if wasteCard.int_value == 13 and (Settings.allow_queens_on_kings == false or Settings.turn_corners == false):
-				return false
-			
-			if top_card.int_value == cardMinusOne or top_card.int_value == cardPlusOne:
-				return top_card
+				valid_moves.append(top_card)
+			if (top_card.int_value == 0 or (wasteCard != null and wasteCard.int_value == 0)):
+				valid_moves.append(top_card)
+			if wasteCard != null:
+				var cardMinusOne = wasteCard.int_value - 1
+				var cardPlusOne = wasteCard.int_value + 1
+
+				if top_card.int_value == cardMinusOne or top_card.int_value == cardPlusOne:
+					if (wasteCard.int_value != 13):
+						valid_moves.append(top_card)
 				
-			if Settings.turn_corners == true:
-				if (top_card.int_value == 1 and wasteCard.int_value == 13 or 
-				top_card.int_value == 13 and wasteCard.int_value == 1):
-					return top_card
+				if Settings.allow_queens_on_kings == true:
+					if (top_card.int_value == 12 and wasteCard.int_value == 13):
+						valid_moves.append(top_card)
+					
+				if Settings.turn_corners == true:
+					if (top_card.int_value == 1 and wasteCard.int_value == 13 or 
+					top_card.int_value == 13 and wasteCard.int_value == 1):
+						valid_moves.append(top_card)
+
 
 func check_game_over():
 	if check_win():
@@ -156,10 +189,10 @@ func check_game_over():
 		return
 	# is the deck empty?
 	if deckCards.get_child_count() == 0:
+		valid_moves = []
+		check_valid_moves()
 		# go through tableaus to see if any of the last cards can be used
-		if check_valid_moves():
-			pass
-		else:		
+		if valid_moves.empty():	
 			gameover()
 			
 func check_win():
@@ -175,11 +208,23 @@ func gameover():
 	disable_ui()
 	set_process(false)
 	gameOverTimer.start()
+	card_data["data"]["score"] = score
+	card_data["data"]["outcome"] = "lose"
+	card_data["data"]["moves"] = moves_data
+	card_data["data"]["settings"] = Settings._settings
+	if Settings.collect_data:
+		_make_post_request(url, card_data, true)
 	
 func win():
 	disable_ui()
 	set_process(false)
 	winTimer.start()
+	card_data["data"]["score"] = score
+	card_data["data"]["outcome"] = "win"
+	card_data["data"]["moves"] = moves_data
+	card_data["data"]["settings"] = Settings._settings
+	if Settings.collect_data:
+		_make_post_request(url, card_data, true)
 
 func undo():
 	if moves.size() > 0:
@@ -219,13 +264,16 @@ func get_score():
 	return score
 
 func hint():
-	var card = check_valid_moves()
-	if card:
+	check_valid_moves()
 
-		card.shake()
+	if not valid_moves.empty():
+		for card in valid_moves:
+			card.shake()
 
 	else:
 		deckButton.shake()
+		
+	valid_moves = []
 
 func _on_GameOverTimer_timeout() -> void:
 	var highScore = score
@@ -238,11 +286,11 @@ func _on_GameOverTimer_timeout() -> void:
 
 
 func _on_UI_new_game() -> void:
-	get_tree().reload_current_scene()
+	newGameConfirmation.popup_centered()
 
 
 func _on_NewGameButton_pressed() -> void:
-	get_tree().reload_current_scene()
+	newGameConfirmation.popup_centered()	
 
 
 func _on_UndoButton_pressed() -> void:
@@ -280,4 +328,18 @@ func _on_MainMenu_pressed() -> void:
 
 
 func _on_ConfirmationDialog_confirmed() -> void:
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/MainMenu.tscn")
+
+
+func _on_NewGameConfirmationDialog_confirmed() -> void:
+# warning-ignore:return_value_discarded
+	get_tree().reload_current_scene()
+
+# warning-ignore:shadowed_variable
+func _make_post_request(url, data_to_send, use_ssl):
+    # Convert data to json string:
+    var query = JSON.print(data_to_send)
+    # Add 'Content-Type' header:
+    var headers = ["Content-Type: application/json", "J-API-KEY: " + api_key]
+    $HTTPRequest.request(url, headers, use_ssl, HTTPClient.METHOD_POST, query)

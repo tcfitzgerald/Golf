@@ -13,6 +13,9 @@ var _settings = {
 	},
 	"sound": {
 		"play_sfx": true
+	},
+	"data": {
+		"collect_data": true
 	}
 }
 # variations
@@ -23,6 +26,9 @@ var empty_foundation
 
 # sound
 var play_sfx
+
+# data
+var collect_data
 
 func _ready() -> void:
 	load_settings()
@@ -46,17 +52,19 @@ func load_settings():
 		jokers_wildcard = _settings["variations"]["jokers_wildcard"]
 		empty_foundation = _settings["variations"]["empty_foundation"]
 		play_sfx = _settings["sound"]["play_sfx"]
+		collect_data = _settings["data"]["collect_data"]
 		return null
 		
 	for section in _settings.keys():
 		for key in _settings[section]:
-			_settings[section][key] = _config_file.get_value(section, key, null)
+			_settings[section][key] = _config_file.get_value(section, key, _settings[section][key])
 			
 	allow_queens_on_kings = _settings["variations"]["queens_on_kings"]
 	turn_corners = _settings["variations"]["turn_corners"]
 	jokers_wildcard = _settings["variations"]["jokers_wildcard"]
 	empty_foundation = _settings["variations"]["empty_foundation"]
 	play_sfx = _settings["sound"]["play_sfx"]
+	collect_data = _settings["data"]["collect_data"]
 			
 func get_setting(section, key):
 	return _settings[section][key]

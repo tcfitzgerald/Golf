@@ -13,6 +13,7 @@ func _ready():
 
 
 func _on_PlayAgainButton_pressed() -> void:
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/Board.tscn")
 
 
@@ -28,4 +29,5 @@ func _on_UndoLastMoveButton_pressed() -> void:
 
 
 func _on_MainMenuButton_pressed() -> void:
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/MainMenu.tscn")

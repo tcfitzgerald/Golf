@@ -12,3 +12,6 @@ func _init(_card, _cardParent, _currentPosition) -> void:
 
 func _ready():
 	pass
+
+func to_json():
+	return {"int_value": card.int_value, "suit": card.suit, "face": card.face_value, "parent": card.get_parent().get_parent().name}

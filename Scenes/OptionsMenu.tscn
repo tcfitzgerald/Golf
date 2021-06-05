@@ -71,7 +71,7 @@ uppercase = true
 margin_left = 242.0
 margin_top = 138.0
 margin_right = 742.0
-margin_bottom = 412.0
+margin_bottom = 454.0
 rect_min_size = Vector2( 500, 0 )
 size_flags_horizontal = 4
 custom_constants/separation = 10
@@ -115,10 +115,16 @@ margin_bottom = 274.0
 rect_min_size = Vector2( 0, 44 )
 text = "PLAY SOUND EFFECTS"
 
+[node name="DataCollectionToggle" type="CheckButton" parent="MarginContainer/VBoxContainer/ToggleContainer"]
+margin_top = 284.0
+margin_right = 500.0
+margin_bottom = 316.0
+text = "SEND GAMEPLAY DATA"
+
 [node name="ButtonContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 432.0
+margin_top = 474.0
 margin_right = 984.0
-margin_bottom = 476.0
+margin_bottom = 518.0
 
 [node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonContainer"]
 margin_left = 364.0
@@ -131,4 +137,5 @@ text = "BACK TO MAIN MENU"
 [connection signal="toggled" from="MarginContainer/VBoxContainer/ToggleContainer/JokersToggle" to="." method="_on_JokersToggle_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/ToggleContainer/EmptyFoundationToggle" to="." method="_on_EmptyFoundationToggle_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/ToggleContainer/PlaySoundEffectsToggle" to="." method="_on_PlaySoundEffectsToggle_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/ToggleContainer/DataCollectionToggle" to="." method="_on_DataCollectionToggle_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonContainer/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]

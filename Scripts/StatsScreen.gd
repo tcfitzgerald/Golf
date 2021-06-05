@@ -17,6 +17,7 @@ func load_stats():
 	if best_time == 0:
 		best_time = "n/a"
 	else:
+# warning-ignore:integer_division
 		var minutes = int(Stats.best_time) / 60
 		var seconds = int(Stats.best_time) % 60
 		best_time = "%2d:%02d" % [minutes, seconds]
@@ -39,5 +40,6 @@ func load_stats():
 
 
 func _on_MainMenuButton_pressed() -> void:
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/MainMenu.tscn")
 

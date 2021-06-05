@@ -28,10 +28,9 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 10.0
-rect_min_size = Vector2( 1024, 600 )
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 1024, 720 )
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -41,7 +40,7 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 38.9999
+margin_left = 39.0
 margin_top = 10.0
 margin_right = 1014.0
 margin_bottom = 46.0
@@ -76,9 +75,9 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 10.0
-margin_top = 708.0
+margin_top = 670.0
 margin_right = 1014.0
-margin_bottom = 748.0
+margin_bottom = 710.0
 rect_min_size = Vector2( 1000, 0 )
 size_flags_vertical = 8
 custom_constants/separation = 10
@@ -96,18 +95,18 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 82, 40 )
 text = "Hint"
 
-[node name="NewGameButton" type="Button" parent="MarginContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer"]
 margin_left = 184.0
-margin_right = 266.0
+margin_right = 799.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 615, 0 )
+
+[node name="NewGameButton" type="Button" parent="MarginContainer/HBoxContainer"]
+margin_left = 809.0
+margin_right = 891.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 82, 40 )
 text = "New Game"
-
-[node name="Control" type="Control" parent="MarginContainer/HBoxContainer"]
-margin_left = 276.0
-margin_right = 891.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 615, 0 )
 
 [node name="MainMenu" type="Button" parent="MarginContainer/HBoxContainer"]
 margin_left = 901.0
@@ -118,11 +117,22 @@ text = "Main Menu"
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
 visible = true
-margin_right = 200.0
-margin_bottom = 70.0
+margin_left = 412.0
+margin_top = 338.0
+margin_right = 612.0
+margin_bottom = 430.0
 dialog_text = "You'll lose your progress if you return to the main menu now."
 dialog_autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="NewGameConfirmationDialog" type="ConfirmationDialog" parent="."]
+visible = true
+margin_left = 412.0
+margin_top = 346.0
+margin_right = 612.0
+margin_bottom = 421.0
+dialog_text = "You'll lose your progress if you start a new game  now."
+dialog_autowrap = true
 [connection signal="pressed" from="MarginContainer/HBoxContainer/NewGameButton" to="." method="_on_NewGameButton_pressed"]
