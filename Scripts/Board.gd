@@ -51,8 +51,8 @@ var valid_moves = []
 var card_data: Dictionary = {"data": {"tableaus": [], "deck": {}, "moves": [], "settings": {}}}
 var GameCenter = null
 
-var url = "https://www.joustingknightgames.com/api/v1/gamedata/"
-var api_key = "9e3afbbc1e01b8596077cae553ab4372d77338a2"
+var url = ""
+var api_key = ""
 
 var moves = []
 var moves_data = []
