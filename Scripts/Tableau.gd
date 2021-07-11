@@ -68,7 +68,7 @@ func _on_tableau_card_clicked(card):
 			var current_score = 0
 			for tableau in board.tableaus:
 				current_score += tableau.get_card_count()
-			board.set_score(current_score)
+			board.update_score(current_score)
 			return
 			
 		if (card.int_value == 0 or wasteCard.int_value == 0):
@@ -105,7 +105,7 @@ func _on_tableau_card_clicked(card):
 	var current_score = 0
 	for tableau in board.tableaus:
 		current_score += tableau.get_card_count()
-	board.set_score(current_score)
+	board.update_score(current_score)
 
 func play_audio():
 	if Settings.play_sfx == true:

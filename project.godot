@@ -33,6 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Golf"
+config/description="1.7.30"
 run/main_scene="res://Scenes/MainMenu.tscn"
 config/icon="res://Graphics/icon.png"
 config/macos_native_icon="res://Graphics/macos.icns"

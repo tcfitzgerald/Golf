@@ -38,7 +38,7 @@ onready var undoTween = $UndoTween
 var card_offset = 30
 var tableau_count = 7
 var cards_per_tableau = 5
-var score = 0 setget set_score
+var score = 0
 var time = 0
 var time_mult = 1
 var str_elapsed = ""
@@ -62,7 +62,7 @@ onready var tableaus = [tableau1, tableau2, tableau3, tableau4, tableau5, tablea
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	set_score(35)
+	score = 35
 	deal_cards()
 	get_card_data()
 	call_deferred("set_process", true)
@@ -93,8 +93,8 @@ func update_time_label(seconds, minutes):
 	str_elapsed = "%02d:%02d" % [minutes, seconds]
 	boardTimeLabel.text = "Time: " + str(str_elapsed)
 
-func set_score(value):
-	score = value
+func update_score(value):
+	score = get_score()
 	update_score_label()
 	
 func update_score_label():
@@ -208,10 +208,11 @@ func gameover():
 	disable_ui()
 	set_process(false)
 	gameOverTimer.start()
-	card_data["data"]["score"] = score
+	card_data["data"]["score"] = get_score()
 	card_data["data"]["outcome"] = "lose"
 	card_data["data"]["moves"] = moves_data
 	card_data["data"]["settings"] = Settings._settings
+	card_data["data"]["version"] = ProjectSettings.get_setting("application/config/description")
 	if Settings.collect_data:
 		_make_post_request(url, card_data, true)
 	
@@ -219,10 +220,11 @@ func win():
 	disable_ui()
 	set_process(false)
 	winTimer.start()
-	card_data["data"]["score"] = score
+	card_data["data"]["score"] = get_score()
 	card_data["data"]["outcome"] = "win"
 	card_data["data"]["moves"] = moves_data
 	card_data["data"]["settings"] = Settings._settings
+	card_data["data"]["version"] = ProjectSettings.get_setting("application/config/description")
 	if Settings.collect_data:
 		_make_post_request(url, card_data, true)
 
@@ -246,10 +248,9 @@ func undo():
 			deckButton.show()
 			
 		var current_score = 0
-		for tableau in tableaus:
-			current_score += tableau.get_card_count()
+		current_score = get_score()
 		
-		set_score(current_score)
+		update_score(current_score)
 		
 		# set current_chain back to zero
 		current_chain = 0
@@ -258,6 +259,7 @@ func undo():
 
 func get_score():
 
+	score = 0
 	for tableau in tableaus:
 		score += tableau.cards.get_child_count()
 	
@@ -276,10 +278,10 @@ func hint():
 	valid_moves = []
 
 func _on_GameOverTimer_timeout() -> void:
-	var highScore = score
+	var highScore = get_score()
 	scoreLabel.text = "Score: " + str(highScore)
 	timeLabel.text = "Time: " + str(str_elapsed)
-	Stats.set_high_score(score)
+	Stats.set_high_score(highScore)
 	Stats.set_num_games_lost()
 	Stats.set_longest_chain(longest_chain)
 	gameOver.popup()
@@ -298,7 +300,8 @@ func _on_UndoButton_pressed() -> void:
 
 
 func _on_WinTimer_timeout() -> void:
-	Stats.set_high_score(score)
+	var highScore = get_score()
+	Stats.set_high_score(highScore)
 	Stats.set_num_games_won()
 	Stats.set_fewest_moves(moves.size())
 	Stats.set_best_time(time)
