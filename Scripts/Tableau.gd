@@ -25,7 +25,7 @@ func get_cards():
 	var cards_array = []
 	
 	for i in range(0,cards.get_child_count()):
-		var card_data_point = {"int_value": cards.get_child(i).int_value, "suit": cards.get_child(i).suit, "face": cards.get_child(i).face_value}
+		var card_data_point = {"int_value": cards.get_child(i).int_value, "suit": cards.get_child(i).suit, "face": cards.get_child(i).face_value, "texture": cards.get_child(i).texture_name}
 		cards_array.append(card_data_point)
 	
 	card_data[tableau_name] = cards_array

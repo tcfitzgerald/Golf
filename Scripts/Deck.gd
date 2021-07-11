@@ -88,6 +88,7 @@ func build_deck():
 		newCard.int_value = card["int_value"]
 		newCard.face_value = card["face"]
 		newCard.card_front_texture = load("res://Graphics/" + card["texture"])
+		newCard.texture_name = card["texture"]
 		cardHolder.add_child(newCard)
 		var cardButton = newCard.get_node("Button")
 		cardButton.disabled = true

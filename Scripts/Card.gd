@@ -4,6 +4,7 @@ extends Node2D
 export(int) var int_value
 export(String) var suit
 export(String) var face_value
+export(String) var texture_name
 export(Texture) var card_front_texture
 export(Texture) var card_back_texture
 

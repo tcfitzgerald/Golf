@@ -102,7 +102,7 @@ func update_score_label():
 
 func get_deck_card_data():
 	for i in range(0,deckCards.get_child_count()):
-		var deckcard_data_point = {"int_value": deckCards.get_child(i).int_value, "suit": deckCards.get_child(i).suit, "face": deckCards.get_child(i).face_value}
+		var deckcard_data_point = {"int_value": deckCards.get_child(i).int_value, "suit": deckCards.get_child(i).suit, "face": deckCards.get_child(i).face_value, "texture": deckCards.get_child(i).texture_name}
 		deckcard_data.append(deckcard_data_point)
 		deckcard_data.invert()
 
@@ -290,7 +290,7 @@ func _on_UI_new_game() -> void:
 
 
 func _on_NewGameButton_pressed() -> void:
-	newGameConfirmation.popup_centered()	
+	newGameConfirmation.popup_centered()
 
 
 func _on_UndoButton_pressed() -> void:
@@ -334,6 +334,7 @@ func _on_ConfirmationDialog_confirmed() -> void:
 
 func _on_NewGameConfirmationDialog_confirmed() -> void:
 # warning-ignore:return_value_discarded
+	Stats.set_num_games_lost()
 	get_tree().reload_current_scene()
 
 # warning-ignore:shadowed_variable

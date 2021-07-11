@@ -95,6 +95,7 @@ margin_right = 757.0
 margin_bottom = 358.0
 rect_min_size = Vector2( 0, 44 )
 text = "QUIT"
+
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/RulesButton" to="." method="_on_RulesButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/OptionsButton" to="." method="_on_OptionsButton_pressed"]
