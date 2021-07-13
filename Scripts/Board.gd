@@ -48,7 +48,7 @@ var best_time = Stats.best_time
 var deckcard_data = []
 var valid_moves = []
 
-var card_data: Dictionary = {"data": {"tableaus": [], "deck": {}, "moves": [], "settings": {}}}
+var card_data: Dictionary = {"data": {"cards": {}, "tableaus": [], "deck": {}, "moves": [], "settings": {}}}
 var GameCenter = null
 
 var url = ""

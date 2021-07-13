@@ -2,7 +2,7 @@ extends Node2D
 class_name Deck
 # onready
 onready var cardHolder = $Cards
-
+onready var board = get_parent()
 # preload
 var cardScene = preload("res://Scenes/Card.tscn")
 
@@ -82,6 +82,7 @@ func build_deck():
 		cards.append(jokers[0])
 		cards.append(jokers[1])
 	cards.shuffle()
+	board.card_data["data"]["cards"] = cards
 	for card in cards:
 		var newCard = cardScene.instance()
 		newCard.suit = card["suit"]
